@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PlayerCharacter : CharacterBody2D
+public partial class EnemyCharacter : CharacterBody2D
 {
 	// Player movement variables
 	[Export]
@@ -11,15 +11,18 @@ public partial class PlayerCharacter : CharacterBody2D
 	[Export]
 	public float maxSpeed = 4.0f;
 
+	// Enemy has a target point that they always try and move towards,
+	// whether it's the base or the player.
+	private Vector2 target;
+
 	public override void _PhysicsProcess(double delta)
 	{	
-		MovePlayer(delta);
+		MoveCharacter(delta);
 	}
 	
-	private void MovePlayer(double delta)
+	private void MoveCharacter(double delta)
 	{
-		// Gets normalized direction
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		Vector2 direction = new Vector2(1.0f, 0.0f);
 		
 		Vector2 velocity = Velocity;
 		
