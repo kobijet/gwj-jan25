@@ -3,39 +3,47 @@ using System;
 
 public partial class PlayerCharacter : CharacterBody2D
 {
-	// Player movement variables
+	// Movement variables
 	[Export]
-	public float acceleration = 30.0f;
-	[Export]
-	public float deceleration = 20.0f;
-	[Export]
-	public float maxSpeed = 4.0f;
+	public float speed { get; set; } = 100.0f;
+	private Vector2 direction;
+
+	// Get input updates the character's direction,
+	// returns true if there is user input,
+	// false when all keys are released
+	public bool GetInput()
+	{
+		direction = Input.GetVector("left", "right", "up", "down");
+		
+		return (direction == Vector2.Zero ? false : true);
+	}
 
 	public override void _PhysicsProcess(double delta)
-	{	
-		MovePlayer(delta);
-	}
-	
-	private void MovePlayer(double delta)
 	{
-		// Gets normalized direction
-		Vector2 direction = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+		GetInput();
 		
 		Vector2 velocity = Velocity;
 		
-		velocity += direction * acceleration * (float)delta;
-		
-		if (velocity != Vector2.Zero)
+		// If player is pressing an input key
+		// GetInput() can be replaced by any bool condition
+		if (GetInput())
 		{
-			velocity = velocity.MoveToward(Vector2.Zero, deceleration * (float)delta);
+			// Apply movement in direction
+			velocity += direction * speed * (float)delta;
+			
+			velocity = velocity.Clamp(-speed, speed);
 		}
-		
-		// Keep speed clamped to maxSpeed in both directions
-		velocity.X = Mathf.Clamp(velocity.X, -maxSpeed, maxSpeed);
-		velocity.Y = Mathf.Clamp(velocity.Y, -maxSpeed, maxSpeed);
+		else
+		{
+			// Apply deceleration to character
+			if (velocity != Vector2.Zero)
+			{
+				velocity = velocity.MoveToward(Vector2.Zero, 100.0f * (float)delta);
+			}
+		}
 		
 		Velocity = velocity;
 		
-		MoveAndCollide(velocity);	
+		MoveAndSlide();
 	}
 }

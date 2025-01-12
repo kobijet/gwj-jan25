@@ -1,15 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2336awkr6obs"]
+[gd_scene load_steps=4 format=3 uid="uid://d2336awkr6obs"]
 
 [ext_resource type="PackedScene" uid="uid://d03smvng0pogp" path="res://game/scenes/player_character.tscn" id="1_5npwl"]
 [ext_resource type="PackedScene" uid="uid://cc6a33nivx6nw" path="res://game/scenes/enemy_spawner.tscn" id="2_ig8jl"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_kwfuw"]
+vertices = PackedVector2Array(461.961, -46.0078, 461.031, 228.883, -67.0625, 223.102, -68.9297, -46.9766)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(472, -56, 471, 239, -77, 233, -79, -57)])
 
 [node name="Game" type="Node2D"]
 position = Vector2(614, 323)
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("1_5npwl")]
+unique_name_in_owner = true
 
 [node name="EnemySpawner" parent="." instance=ExtResource("2_ig8jl")]
 position = Vector2(-210, 0)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(-195, -94)
+navigation_polygon = SubResource("NavigationPolygon_kwfuw")

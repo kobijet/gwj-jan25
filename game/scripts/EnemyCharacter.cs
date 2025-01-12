@@ -3,42 +3,52 @@ using System;
 
 public partial class EnemyCharacter : CharacterBody2D
 {
-	// Player movement variables
+	// Movement variables
 	[Export]
-	public float acceleration = 30.0f;
-	[Export]
-	public float deceleration = 20.0f;
-	[Export]
-	public float maxSpeed = 1.0f;
+	public float speed { get; set; } = 5.0f;
+	private Vector2 direction;
+	
+	private Vector2 targetPos = new Vector2(300.0f, 100.0f);
+	private float distanceToTarget;
 
-	// Enemy has a target point that they always try and move towards,
-	// whether it's the base or the player.
-	private Vector2 target;
+	// GetDistanceToTarget updates the character's direction,
+	// returns true if character needs to move towards target,
+	// false when character is within range of target
+	public bool GetDistanceToTarget()
+	{
+		direction = targetPos - Position;
+		
+		// Calculate distance from character to target
+		distanceToTarget = Mathf.Sqrt( Mathf.Pow(targetPos.X - Position.X, 2) + Mathf.Pow(targetPos.Y - Position.Y, 2) );
+		GD.Print(distanceToTarget);
+		
+		direction = direction.Normalized();
+		
+		return (direction == Vector2.Zero ? false : true);
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{	
-		MoveCharacter(delta);
-	}
-	
-	private void MoveCharacter(double delta)
-	{
-		Vector2 direction = new Vector2(1.0f, 0.0f);
-		
 		Vector2 velocity = Velocity;
 		
-		velocity += direction * acceleration * (float)delta;
-		
-		if (velocity != Vector2.Zero)
+		// If enemy isn't at target location
+		// GetInput() can be replaced by any bool condition
+		if (GetDistanceToTarget())
 		{
-			velocity = velocity.MoveToward(Vector2.Zero, deceleration * (float)delta);
+			// Apply movement in direction
+			velocity += direction * speed * (float)delta;
 		}
-		
-		// Keep speed clamped to maxSpeed in both directions
-		velocity.X = Mathf.Clamp(velocity.X, -maxSpeed, maxSpeed);
-		velocity.Y = Mathf.Clamp(velocity.Y, -maxSpeed, maxSpeed);
+		else
+		{
+			// Apply deceleration to character
+			if (velocity != Vector2.Zero)
+			{
+				velocity = velocity.MoveToward(Vector2.Zero, 100.0f * (float)delta);
+			}
+		}
 		
 		Velocity = velocity;
 		
-		MoveAndCollide(velocity);	
+		MoveAndSlide();
 	}
 }
