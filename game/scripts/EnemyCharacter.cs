@@ -9,7 +9,7 @@ public partial class EnemyCharacter : CharacterBody2D
 	[Export]
 	public float deceleration = 20.0f;
 	[Export]
-	public float maxSpeed = 4.0f;
+	public float maxSpeed = 1.0f;
 
 	// Enemy has a target point that they always try and move towards,
 	// whether it's the base or the player.

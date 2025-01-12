@@ -1,12 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwtu8dbtqr6vk"]
+[gd_scene load_steps=4 format=3 uid="uid://bwtu8dbtqr6vk"]
 
-[ext_resource type="Texture2D" uid="uid://dlqnwlbhgu66t" path="res://game/sprites/TheGameJammers_Logo_whiteBG.png" id="1_oetxh"]
 [ext_resource type="Script" path="res://game/scripts/EnemyCharacter.cs" id="1_ulqsu"]
+[ext_resource type="Texture2D" uid="uid://3khsyvqtb16t" path="res://game/sprites/Enemy_Ant_Basic.png" id="2_q642v"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tq4wk"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rxtly"]
-blend_mode = 2
+radius = 8.0
+height = 28.0
 
 [node name="EnemyCharacter" type="CharacterBody2D"]
 script = ExtResource("1_ulqsu")
@@ -15,7 +14,6 @@ script = ExtResource("1_ulqsu")
 shape = SubResource("CapsuleShape2D_tq4wk")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_rxtly")
 position = Vector2(0, -2.38419e-07)
-scale = Vector2(0.0136719, 0.0234375)
-texture = ExtResource("1_oetxh")
+scale = Vector2(0.0400009, 0.0400009)
+texture = ExtResource("2_q642v")
