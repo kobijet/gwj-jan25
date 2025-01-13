@@ -5,7 +5,7 @@ public partial class EnemyCharacter : CharacterBody2D
 {
 	// Movement variables
 	[Export]
-	public float speed { get; set; } = 5.0f;
+	public float speed { get; set; } = 25.0f;
 	private Vector2 direction;
 	
 	private Vector2 targetPos = new Vector2(300.0f, 100.0f);
@@ -20,11 +20,10 @@ public partial class EnemyCharacter : CharacterBody2D
 		
 		// Calculate distance from character to target
 		distanceToTarget = Mathf.Sqrt( Mathf.Pow(targetPos.X - Position.X, 2) + Mathf.Pow(targetPos.Y - Position.Y, 2) );
-		GD.Print(distanceToTarget);
 		
 		direction = direction.Normalized();
 		
-		return (direction == Vector2.Zero ? false : true);
+		return (distanceToTarget <= 10.0f ? false : true);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -37,13 +36,15 @@ public partial class EnemyCharacter : CharacterBody2D
 		{
 			// Apply movement in direction
 			velocity += direction * speed * (float)delta;
+			
+			velocity = velocity.Clamp(-speed, speed);
 		}
 		else
 		{
 			// Apply deceleration to character
 			if (velocity != Vector2.Zero)
 			{
-				velocity = velocity.MoveToward(Vector2.Zero, 100.0f * (float)delta);
+				velocity = velocity.Lerp(Vector2.Zero, 10.0f * (float)delta);
 			}
 		}
 		
