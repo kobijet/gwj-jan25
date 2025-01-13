@@ -5,8 +5,15 @@ public partial class PlayerCharacter : CharacterBody2D
 {
 	// Movement variables
 	[Export]
-	public float speed { get; set; } = 100.0f;
+	public float speed { get; set; } = 175.0f;
 	private Vector2 direction;
+
+	public override void _Ready()
+	{
+		HealthComponent healthComponent = GetNode<HealthComponent>("HealthComponent");
+		healthComponent.TakeDamage(100.0f);
+		healthComponent.HealthDepleted += OnHealthDepleted;
+	}
 
 	// Get input updates the character's direction,
 	// returns true if there is user input,
@@ -38,12 +45,17 @@ public partial class PlayerCharacter : CharacterBody2D
 			// Apply deceleration to character
 			if (velocity != Vector2.Zero)
 			{
-				velocity = velocity.MoveToward(Vector2.Zero, 100.0f * (float)delta);
+				velocity = velocity.Lerp(Vector2.Zero, 10.0f * (float)delta);
 			}
 		}
 		
 		Velocity = velocity;
 		
 		MoveAndSlide();
+	}
+	
+	private void OnHealthDepleted()
+	{
+		GD.Print("Player is dead!");
 	}
 }
