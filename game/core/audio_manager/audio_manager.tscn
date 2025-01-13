@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpu2n2v3g5one"]
+
+[ext_resource type="Script" path="res://game/core/audio_manager/audio_manager.gd" id="1_i8t5j"]
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_xef58"]
+
+[node name="AudioManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_i8t5j")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+
+[node name="UI" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamPolyphonic_xef58")

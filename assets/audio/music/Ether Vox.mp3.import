@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://n8l3eq4ra2fo"
+path="res://.godot/imported/Ether Vox.mp3-cc913fd72faba662017f530c08e5852e.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/Ether Vox.mp3"
+dest_files=["res://.godot/imported/Ether Vox.mp3-cc913fd72faba662017f530c08e5852e.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

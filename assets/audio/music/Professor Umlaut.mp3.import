@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bh12do8u7njws"
+path="res://.godot/imported/Professor Umlaut.mp3-cd30d675f0b8ffecef7c7172ae15c879.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/Professor Umlaut.mp3"
+dest_files=["res://.godot/imported/Professor Umlaut.mp3-cd30d675f0b8ffecef7c7172ae15c879.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

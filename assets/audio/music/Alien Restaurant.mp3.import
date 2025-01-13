@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bcdut24h8lrq"
+path="res://.godot/imported/Alien Restaurant.mp3-7e265270552085f22c0036f43c7e608d.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/music/Alien Restaurant.mp3"
+dest_files=["res://.godot/imported/Alien Restaurant.mp3-7e265270552085f22c0036f43c7e608d.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
