@@ -3,22 +3,25 @@ using System;
 
 public partial class HealthComponent : Control
 {
-	[Export]
-	public float maxHealth = 100.0f;
-	public float health = 100.0f;
+	// Health bar variables
+	[Export] public float maxHealth = 100.0f;
+	private float health = 100.0f;
 	
-	[Signal]
-	public delegate void HealthDepletedEventHandler();
-	
+	// UI
 	private ProgressBar healthBar;
 	
-	public override void _Ready()
-	{
+	// Events
+	[Signal] public delegate void HealthDepletedEventHandler();
+	
+	public override void _EnterTree()
+	{	
+		// Setup health bar values
 		healthBar = GetNode<ProgressBar>("HealthBar");
 		healthBar.Value = health;
 		healthBar.MaxValue = maxHealth;
 	}
 	
+	// Take damage and update healthbar
 	public void TakeDamage(float amount)
 	{
 		GD.Print("Taking " + amount + " damage");
@@ -26,13 +29,14 @@ public partial class HealthComponent : Control
 		
 		healthBar.Value = health;
 		
-		if (health <= 0.0f)
+		if (health <= 0)
 		{
-			GD.Print("Entity dead");
+			// Emit health signal
 			EmitSignal(SignalName.HealthDepleted);
 		}
 	}
 	
+	// Heal damage and update healthbar
 	public void HealDamage(float amount)
 	{
 		GD.Print("Healing " + amount + " damage");

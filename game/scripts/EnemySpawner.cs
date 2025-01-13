@@ -21,6 +21,12 @@ public partial class EnemySpawner : Node2D
 		Vector2 spawnPositionOffset = new Vector2(0.0f, 0.0f);
 		SpawnEnemy(spawnPositionOffset);
 		
+		spawnPositionOffset = new Vector2(0.0f, 10.0f);
+		SpawnEnemy(spawnPositionOffset);
+		
+		spawnPositionOffset = new Vector2(0.0f, 50.0f);
+		SpawnEnemy(spawnPositionOffset);
+		
 	}
 	
 	public void SpawnEnemy(Vector2 spawnPosition)

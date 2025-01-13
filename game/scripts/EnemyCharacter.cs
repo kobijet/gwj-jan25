@@ -4,40 +4,61 @@ using System;
 public partial class EnemyCharacter : CharacterBody2D
 {
 	// Movement variables
-	[Export]
-	public float speed { get; set; } = 25.0f;
+	[Export] public float speed { get; set; } = 50.0f;
+	[Export] public float maxSpeed { get; set; } = 100.0f;
 	private Vector2 direction;
 	
+	private HealthComponent healthComponent;
+	
+	// Pathfinding
 	private Vector2 targetPos = new Vector2(300.0f, 100.0f);
 	private float distanceToTarget;
+	
+	private Node2D playerCharacter;
 
-	// GetDistanceToTarget updates the character's direction,
-	// returns true if character needs to move towards target,
-	// false when character is within range of target
-	public bool GetDistanceToTarget()
+	public override void _Ready()
 	{
-		direction = targetPos - Position;
+		// Set target chase position to player position
+		playerCharacter = GetTree().Root.GetNode<Node2D>("Game/%PlayerCharacter");
 		
-		// Calculate distance from character to target
-		distanceToTarget = Mathf.Sqrt( Mathf.Pow(targetPos.X - Position.X, 2) + Mathf.Pow(targetPos.Y - Position.Y, 2) );
-		
-		direction = direction.Normalized();
-		
-		return (distanceToTarget <= 10.0f ? false : true);
+		// Subscribe to health depleted event
+		healthComponent = GetNode<HealthComponent>("HealthComponent");
+		healthComponent.HealthDepleted += OnHealthDepleted;
 	}
 
 	public override void _PhysicsProcess(double delta)
-	{	
+	{
+		// Set player character as target to chase
+		targetPos = playerCharacter.GlobalPosition;
+		
+		// Calculate and set distance to target
+		distanceToTarget = GetDistanceToTarget();
+		GD.Print(distanceToTarget);
+		
+		MoveEnemy(delta);
+	}
+	
+	// Returns distance from current position to targetPos
+	public float GetDistanceToTarget()
+	{
+		// Calculate distance from character to target
+		return Mathf.Sqrt( Mathf.Pow(targetPos.X - GlobalPosition.X, 2) + Mathf.Pow(targetPos.Y - GlobalPosition.Y, 2) );
+	}
+	
+	// Moves enemy until within range of targetPos
+	public void MoveEnemy(double delta)
+	{
 		Vector2 velocity = Velocity;
 		
-		// If enemy isn't at target location
-		// GetInput() can be replaced by any bool condition
-		if (GetDistanceToTarget())
+		direction = targetPos - GlobalPosition;
+		direction = direction.Normalized();
+		
+		if (distanceToTarget >= 50.0f ? true : false)
 		{
 			// Apply movement in direction
-			velocity += direction * speed * (float)delta;
+			velocity = direction * maxSpeed;
 			
-			velocity = velocity.Clamp(-speed, speed);
+			velocity = velocity.Clamp(-maxSpeed, maxSpeed);	
 		}
 		else
 		{
@@ -51,5 +72,15 @@ public partial class EnemyCharacter : CharacterBody2D
 		Velocity = velocity;
 		
 		MoveAndSlide();
+	}
+	
+	private void OnHealthDepleted()
+	{
+		// Do stuff on character death
+	}
+	
+	public override void _ExitTree()
+	{
+		healthComponent.HealthDepleted -= OnHealthDepleted;
 	}
 }

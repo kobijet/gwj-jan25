@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwtu8dbtqr6vk"]
+[gd_scene load_steps=5 format=3 uid="uid://bwtu8dbtqr6vk"]
 
 [ext_resource type="Script" path="res://game/scripts/EnemyCharacter.cs" id="1_ulqsu"]
 [ext_resource type="Texture2D" uid="uid://3khsyvqtb16t" path="res://game/sprites/Enemy_Ant_Basic.png" id="2_q642v"]
+[ext_resource type="PackedScene" uid="uid://dwj6k8322b6rv" path="res://game/scenes/components/health_component.tscn" id="3_h6gmj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tq4wk"]
 radius = 8.0
@@ -17,3 +18,8 @@ shape = SubResource("CapsuleShape2D_tq4wk")
 position = Vector2(0, -2.38419e-07)
 scale = Vector2(0.0400009, 0.0400009)
 texture = ExtResource("2_q642v")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_h6gmj")]
+offset_top = -16.0
+offset_bottom = -16.0
+scale = Vector2(0.25, 0.15)
