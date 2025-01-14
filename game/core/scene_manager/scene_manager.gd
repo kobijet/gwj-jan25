@@ -12,7 +12,7 @@ extends Node
 
 # Simple Canvas Node To Cover Everything. Has functions, 'fade_in', and 'fade_out'.
 var load_screen_instance : LoadingScreen
-const LOADING_SCREEN = preload("res://game/scenes/UI/loading_screen.tscn")
+const LOADING_SCREEN = preload("res://game/scenes/ui/loading_screen.tscn")
 
 # Current Scene, and Next Scene to go to.
 var current_scene : Node
@@ -20,7 +20,7 @@ var next_scene : PackedScene
 
 # Canvas Node, to instantiate during the pause menu.
 var pause_menu_instance : PauseScreen
-const PAUSE_SCREEN = preload("res://game/scenes/UI/pause_screen.tscn")
+const PAUSE_SCREEN = preload("res://game/scenes/ui/pause_screen.tscn")
 
 # Dictionary of scenes. Add more as needed.
 var known_scenes: Dictionary = {

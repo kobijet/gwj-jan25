@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://sv47lnemnjnc"]
 
 [ext_resource type="Shader" path="res://assets/shaders/screen_blur.gdshader" id="1_43ew5"]
-[ext_resource type="Script" path="res://game/scripts/UI/pause_screen.gd" id="1_ba3h2"]
+[ext_resource type="Script" path="res://game/scripts/ui/pause_screen.gd" id="1_ba3h2"]
 [ext_resource type="Theme" uid="uid://dtej56pljgyf2" path="res://assets/ui_theme/temp_theme.tres" id="2_23tle"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8cbiy"]

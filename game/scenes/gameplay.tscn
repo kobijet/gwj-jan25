@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2336awkr6obs"]
+[gd_scene load_steps=3 format=3 uid="uid://d2336awkr6obs"]
 
 [ext_resource type="PackedScene" uid="uid://d03smvng0pogp" path="res://game/scenes/player_character.tscn" id="1_5npwl"]
+[ext_resource type="PackedScene" uid="uid://dhrnd8m7cy416" path="res://game/scenes/game_manager.tscn" id="2_f1l1p"]
 
 [node name="Game" type="Node2D"]
 position = Vector2(614, 323)
@@ -8,5 +9,7 @@ position = Vector2(614, 323)
 [node name="PlayerCharacter" parent="." instance=ExtResource("1_5npwl")]
 unique_name_in_owner = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="PlayerCharacter"]
 zoom = Vector2(2, 2)
+
+[node name="GameManager" parent="." instance=ExtResource("2_f1l1p")]

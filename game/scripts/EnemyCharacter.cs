@@ -33,7 +33,6 @@ public partial class EnemyCharacter : CharacterBody2D
 		
 		// Calculate and set distance to target
 		distanceToTarget = GetDistanceToTarget();
-		GD.Print(distanceToTarget);
 		
 		MoveEnemy(delta);
 	}
