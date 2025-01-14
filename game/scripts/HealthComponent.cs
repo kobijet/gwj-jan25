@@ -24,7 +24,6 @@ public partial class HealthComponent : Control
 	// Take damage and update healthbar
 	public void TakeDamage(float amount)
 	{
-		GD.Print("Taking " + amount + " damage");
 		health -= amount;
 		
 		healthBar.Value = health;
@@ -39,7 +38,6 @@ public partial class HealthComponent : Control
 	// Heal damage and update healthbar
 	public void HealDamage(float amount)
 	{
-		GD.Print("Healing " + amount + " damage");
 		health += amount;
 		
 		healthBar.Value = health;

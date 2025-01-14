@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class GameManager : Node
 {
@@ -15,6 +16,7 @@ public partial class GameManager : Node
 	private double pausedTime;
 	
 	[Export] public PackedScene enemySpawner { get; set; }
+	private List<Node2D> enemySpawners;
 	
 	private Random rand;
 	
@@ -28,6 +30,7 @@ public partial class GameManager : Node
 		// Save the time at start of gameplay scene
 		startTime = GetTicksInSeconds();
 	
+		enemySpawners = new List<Node2D>();
 		SetupEnemySpawners(4);
 	}
 	
@@ -43,11 +46,14 @@ public partial class GameManager : Node
 		
 		for (int i = 0; i < numSpawners; i++)
 		{
+			// Get random position for spawner, at least 100px within the level edge
 			int randX = rand.Next(100, (int)viewportSize.X - 100);
 			int randY = rand.Next(100, (int)viewportSize.Y - 100);
 			
+			// Instantiate spawner scene and add to spawners list
 			Node2D spawner = (Node2D)enemySpawner.Instantiate();
 			spawner.Position = new Vector2(randX, randY);
+			enemySpawners.Add(spawner);
 			AddChild(spawner);
 		}
 	}

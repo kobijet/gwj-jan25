@@ -76,6 +76,7 @@ public partial class EnemyCharacter : CharacterBody2D
 	private void OnHealthDepleted()
 	{
 		// Do stuff on character death
+		QueueFree();
 	}
 	
 	public override void _ExitTree()

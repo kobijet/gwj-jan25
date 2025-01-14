@@ -7,6 +7,7 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_51tqa"]
 
 [node name="PlayerCharacter" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_hvkpo")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
@@ -21,3 +22,6 @@ texture = ExtResource("1_mjgbr")
 offset_top = -16.0
 offset_bottom = -16.0
 scale = Vector2(0.25, 0.15)
+
+[node name="WeaponPivot" type="Node2D" parent="."]
+position = Vector2(-7, 0)

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://drc1gwtsjmy7s"]
+
+[ext_resource type="Script" path="res://game/scripts/weapons/MeleeWeapon.cs" id="1_a6ttt"]
+[ext_resource type="Texture2D" uid="uid://cotthjpxtn34q" path="res://game/sprites/dev_sword.png" id="1_awhl8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38s24"]
+size = Vector2(16, 12)
+
+[node name="MeleeWeapon" type="Node2D"]
+script = ExtResource("1_a6ttt")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1, -9)
+scale = Vector2(0.5, 0.657)
+texture = ExtResource("1_awhl8")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-16, -8)
+rotation = 3.14159
+scale = Vector2(2, 2.5)
+shape = SubResource("RectangleShape2D_38s24")
