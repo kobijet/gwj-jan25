@@ -33,11 +33,12 @@ public partial class PlayerCharacter : CharacterBody2D
 	{
 		MovePlayer(delta);
 		
-		// Flip character to the side the mouse is on
+		// Get mouse position and direction from character to mouse position
 		Vector2 mousePos = GetViewport().GetMousePosition() + Position;
 		Vector2 spriteDir = mousePos - GlobalPosition;
 		spriteDir = spriteDir.Normalized();
 		
+		// Flip character and weapon to side the mouse is on
 		if (spriteDir.X > 0.0f)
 		{
 			GetNode<Sprite2D>("Sprite").FlipH = true;

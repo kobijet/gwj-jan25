@@ -18,10 +18,10 @@ position = Vector2(0, -2.38419e-07)
 scale = Vector2(0.0136719, 0.0234375)
 texture = ExtResource("1_mjgbr")
 
+[node name="WeaponPivot" type="Node2D" parent="."]
+position = Vector2(-7, 0)
+
 [node name="HealthComponent" parent="." instance=ExtResource("3_xfj0y")]
 offset_top = -16.0
 offset_bottom = -16.0
 scale = Vector2(0.25, 0.15)
-
-[node name="WeaponPivot" type="Node2D" parent="."]
-position = Vector2(-7, 0)

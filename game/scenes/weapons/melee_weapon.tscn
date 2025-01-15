@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cotthjpxtn34q" path="res://game/sprites/dev_sword.png" id="1_awhl8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_38s24"]
-size = Vector2(16, 12)
+size = Vector2(29.5, 25.2)
 
 [node name="MeleeWeapon" type="Node2D"]
 script = ExtResource("1_a6ttt")
@@ -18,7 +18,7 @@ texture = ExtResource("1_awhl8")
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(-16, -8)
+position = Vector2(-29.5, -6.5)
 rotation = 3.14159
 scale = Vector2(2, 2.5)
 shape = SubResource("RectangleShape2D_38s24")
