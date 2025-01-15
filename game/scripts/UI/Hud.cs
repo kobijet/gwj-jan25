@@ -8,13 +8,11 @@ public partial class Hud : CanvasLayer
 	private Label gameClockText;
 	private Button nextRoundButton;
 	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public override void _EnterTree()
 	{
 		GameManager = GetNode<GameManager>("%GameManager");
 		
 		gameClockText = GetNode<Label>("GamePanel/GameClockText");
-		
 		nextRoundButton = GetNode<Button>("GamePanel/NextRoundButton");
 	}
 
@@ -31,7 +29,7 @@ public partial class Hud : CanvasLayer
 	}
 	
 	public void StartRound()
-	{
+	{		
 		gameClockText.Visible = true;
 		nextRoundButton.Visible = false;
 	}

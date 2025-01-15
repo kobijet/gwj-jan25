@@ -25,8 +25,8 @@ public partial class EnemySpawner : Node2D
 		// Setup initial spawn timer
 		spawnTimer = new Timer();
 		spawnTimer.Timeout += SpawnEnemy;
-		
 		AddChild(spawnTimer);
+		spawnTimer.Start();
 		
 		StartSpawner();
 	}
@@ -34,7 +34,7 @@ public partial class EnemySpawner : Node2D
 	public void StartSpawner()
 	{
 		spawnTimer.SetWaitTime(spawnCooldown);
-		spawnTimer.Start();
+		spawnTimer.SetPaused(false);
 	}
 	
 	public void StopSpawner()

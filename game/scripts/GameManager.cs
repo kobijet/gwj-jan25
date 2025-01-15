@@ -4,14 +4,9 @@ using System.Collections.Generic;
 
 public partial class GameManager : Node
 {
-	public enum GameStates {
-		ROUND_COMPLETE = 0, // Shop menu is active
-		ROUND_ACTIVE = 1, // Gameplay is active
-		GAME_OVER = 2 // Game over
-	}
-	public GameStates GameState = GameStates.ROUND_ACTIVE;
+	public int roundsComplete;
 	
-	[Export] public double roundLength = 4.0;
+	[Export] public double roundLength = 10.0;
 	
 	private Timer gameTimer;
 	private double timeLeft;
@@ -28,11 +23,13 @@ public partial class GameManager : Node
 	{
 		rand = new Random();
 		
-		// Start a master clock
+		// Start a round timer
+		// End round when timer runs out
 		gameTimer = new Timer();
 		gameTimer.SetWaitTime(roundLength);
 		gameTimer.Timeout += EndRound;
 		AddChild(gameTimer);
+		gameTimer.Start();
 		
 		enemySpawner = ResourceLoader.Load<PackedScene>("res://game/scenes/enemy_spawner.tscn");
 		
@@ -79,13 +76,16 @@ public partial class GameManager : Node
 	private void StartRound()
 	{
 		gameTimer.SetWaitTime(roundLength);
-		gameTimer.Start();
+		gameTimer.SetPaused(false);
 		StartEnemySpawners();
-		//gameHud.StartRound();
+		gameHud.StartRound();
 	}	
 
 	private void EndRound()
 	{
+		GD.Print("Rounds complete: ");
+		roundsComplete++;
+		
 		gameTimer.SetPaused(true);
 		PauseEnemySpawners();
 		gameHud.EndRound();

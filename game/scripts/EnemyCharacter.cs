@@ -15,6 +15,11 @@ public partial class EnemyCharacter : CharacterBody2D
 	private float distanceToTarget;
 	
 	private Node2D playerCharacter;
+	
+	private Area2D attackArea;
+	
+	private Timer attackTimer;
+	[Export] public double attackCooldown = 1.0;
 
 	public override void _Ready()
 	{
@@ -24,6 +29,15 @@ public partial class EnemyCharacter : CharacterBody2D
 		// Subscribe to health depleted event
 		healthComponent = GetNode<HealthComponent>("HealthComponent");
 		healthComponent.HealthDepleted += OnHealthDepleted;
+		
+		attackArea = GetNode<Area2D>("AttackArea");
+		
+		// Setup attack cooldown timer
+		attackTimer = new Timer();
+		attackTimer.SetWaitTime(attackCooldown);
+		attackTimer.Autostart = true;
+		attackTimer.Timeout += AttackEntity;
+		AddChild(attackTimer);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -35,6 +49,22 @@ public partial class EnemyCharacter : CharacterBody2D
 		distanceToTarget = GetDistanceToTarget();
 		
 		MoveEnemy(delta);
+	}
+	
+	private void AttackEntity()
+	{
+		Godot.Collections.Array<Node2D> overlappingBodies = attackArea.GetOverlappingBodies();
+		
+		if (overlappingBodies != null)
+		{
+			// Check if enemy is overlapping something it can damage
+			// If it is, deal damage on a timer to that entity
+			for (int i = 0; i < overlappingBodies.Count; i++)
+			{
+				HealthComponent healthComponent = overlappingBodies[i].GetNode<HealthComponent>("HealthComponent");
+				healthComponent.TakeDamage(5.0f);
+			}
+		}
 	}
 	
 	// Returns distance from current position to targetPos
