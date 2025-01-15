@@ -37,7 +37,8 @@ public partial class GameManager : Node
 		enemySpawner = ResourceLoader.Load<PackedScene>("res://game/scenes/enemy_spawner.tscn");
 		
 		// Get game hud elements to display info for the player
-		gameHud = GetNode<Hud>("%PlayerCharacter/Camera2D/HUD");
+		var hudNode = GetNode<Node>("%PlayerCharacter/Camera2D/HUD");
+		gameHud = hudNode as Hud;
 		gameHud.GetNode<Button>("GamePanel/NextRoundButton").Pressed += StartRound;
 	
 		// Keep a list of enemy spawners for control
