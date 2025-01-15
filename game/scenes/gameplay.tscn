@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2336awkr6obs"]
 
 [ext_resource type="PackedScene" uid="uid://d03smvng0pogp" path="res://game/scenes/player_character.tscn" id="1_5npwl"]
-[ext_resource type="PackedScene" uid="uid://dhrnd8m7cy416" path="res://game/scenes/game_manager.tscn" id="2_f1l1p"]
+[ext_resource type="PackedScene" uid="uid://dhrnd8m7cy416" path="res://game/core/game_manager/game_manager.tscn" id="2_f1l1p"]
 
 [node name="Game" type="Node2D"]
 position = Vector2(614, 323)
