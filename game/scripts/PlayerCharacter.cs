@@ -20,6 +20,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	
 	private PackedScene meleeWeaponScene;
 	private PackedScene rangedWeaponScene;
+	private PackedScene bombScene;
 	
 	private Node2D weapon;
 	private Marker2D weaponPivot;
@@ -34,12 +35,29 @@ public partial class PlayerCharacter : CharacterBody2D
 		// Load base weapon scenes
 		meleeWeaponScene = ResourceLoader.Load<PackedScene>("res://game/scenes/weapons/melee_weapon.tscn");
 		rangedWeaponScene = ResourceLoader.Load<PackedScene>("res://game/scenes/weapons/ranged_weapon.tscn");
+		bombScene = ResourceLoader.Load<PackedScene>("res://game/scenes/weapons/bomb.tscn");
 		
 		weaponPivot = GetNode<Marker2D>("WeaponPivot");
 		
 		// Create melee weapon and add instantiate as a child of the weapon pivot
-		SwapWeapons(WeaponTypes.RANGED);
+		SwapWeapons(WeaponTypes.BOMB);
 		
+	}
+
+	public override void _Process(double delta)
+	{
+		// Allow creation of bombs if bomb weapon is active
+		if (activeWeapon == WeaponTypes.BOMB)
+		{
+			if (Input.IsActionJustPressed("attack_1"))
+			{
+				Node2D bomb = (Node2D)bombScene.Instantiate();
+				GetNode("/root/Game").AddChild(bomb);
+				Bomb bombScript = bomb as Bomb;
+				bombScript.StartTimer();
+				bomb.Position = Position;
+			}
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -53,7 +71,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		FlipSprite(lookDirection);
 	}
 	
-	// Get input updates the character's direction,
+	// Updates the character's direction,
 	// returns true if there is user input,
 	// false when all keys are released
 	public bool GetInput()
@@ -99,6 +117,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	{
 		activeWeapon = weaponType;
 		
+		// Set weapon to the proper scene for display
 		switch (weaponType)
 		{
 			case WeaponTypes.MELEE:
@@ -106,6 +125,9 @@ public partial class PlayerCharacter : CharacterBody2D
 				break;
 			case WeaponTypes.RANGED:
 				weapon = (Node2D)rangedWeaponScene.Instantiate();
+				break;
+			case WeaponTypes.BOMB:
+				weapon = (Node2D)bombScene.Instantiate();
 				break;
 		}
 		

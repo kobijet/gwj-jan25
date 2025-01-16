@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnw35olm83qlg"]
+
+[ext_resource type="Texture2D" uid="uid://dt63m2ae3le0x" path="res://game/sprites/bullet.png" id="1_do4lc"]
+[ext_resource type="Script" path="res://game/scripts/weapons/Bomb.cs" id="1_jr41p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5syvj"]
+
+[node name="Bomb" type="Node2D"]
+script = ExtResource("1_jr41p")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_do4lc")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="BlastRadius" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BlastRadius"]
+scale = Vector2(15, 15)
+shape = SubResource("CircleShape2D_5syvj")
