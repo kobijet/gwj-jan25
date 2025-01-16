@@ -46,6 +46,21 @@ public partial class PlayerCharacter : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
+		// Hot swap keys for testing
+		if (Input.IsActionJustPressed("swap_1"))
+		{
+			SwapWeapons(WeaponTypes.MELEE);
+		}
+		if (Input.IsActionJustPressed("swap_2"))
+		{
+			SwapWeapons(WeaponTypes.RANGED);
+		}
+		if (Input.IsActionJustPressed("swap_3"))
+		{
+			SwapWeapons(WeaponTypes.BOMB);
+		}
+		
+		
 		// Allow creation of bombs if bomb weapon is active
 		if (activeWeapon == WeaponTypes.BOMB)
 		{
@@ -113,8 +128,14 @@ public partial class PlayerCharacter : CharacterBody2D
 		MoveAndSlide();
 	}
 	
+	// Instantiates a new weapon in the weapon slot and destroys the old one
 	private void SwapWeapons(WeaponTypes weaponType)
 	{
+		if (weaponPivot.GetChildCount() != 0 )
+		{
+			weapon.QueueFree();
+		}
+		
 		activeWeapon = weaponType;
 		
 		// Set weapon to the proper scene for display

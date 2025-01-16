@@ -23,6 +23,6 @@ flip_h = true
 position = Vector2(-7, 0)
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_xfj0y")]
-offset_top = -16.0
-offset_bottom = -16.0
+offset_top = -24.0
+offset_bottom = -24.0
 scale = Vector2(0.25, 0.15)
