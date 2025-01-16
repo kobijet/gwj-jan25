@@ -32,6 +32,7 @@ unique_name_in_owner = true
 [node name="PlayerCharacter" parent="." instance=ExtResource("1_5npwl")]
 unique_name_in_owner = true
 scale = Vector2(1.00424, 1)
+maxSpeed = 175.0
 
 [node name="Camera2D" type="Camera2D" parent="PlayerCharacter"]
 zoom = Vector2(3, 3)

@@ -3,7 +3,7 @@ using System;
 
 public partial class Bomb : Node2D
 {
-	public float damage = 75.0f;
+	[Export] public float damage = 75.0f;
 	
 	public float cooldownTime = 8.0f;
 	

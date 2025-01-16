@@ -16,10 +16,11 @@ public partial class EnemyCharacter : CharacterBody2D
 	
 	private Node2D playerCharacter;
 	
+	// Attack variables
 	private Area2D attackArea;
-	
 	private Timer attackTimer;
 	[Export] public double attackCooldown = 1.0;
+	[Export] public float damage = 5.0f;
 
 	public override void _Ready()
 	{
@@ -62,7 +63,7 @@ public partial class EnemyCharacter : CharacterBody2D
 			for (int i = 0; i < overlappingBodies.Count; i++)
 			{
 				HealthComponent healthComponent = overlappingBodies[i].GetNode<HealthComponent>("HealthComponent");
-				healthComponent.TakeDamage(5.0f);
+				healthComponent.TakeDamage(damage);
 			}
 		}
 	}
