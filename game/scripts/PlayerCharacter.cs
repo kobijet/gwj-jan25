@@ -10,8 +10,19 @@ public partial class PlayerCharacter : CharacterBody2D
 	
 	private HealthComponent healthComponent;
 	
-	private Node2D meleeWeapon;
-	private Node2D weaponPivot;
+	private enum WeaponTypes {
+		MELEE,
+		RANGED,
+		BOMB,
+		UTILITY
+	}
+	private WeaponTypes activeWeapon;
+	
+	private PackedScene meleeWeaponScene;
+	private PackedScene rangedWeaponScene;
+	
+	private Node2D weapon;
+	private Marker2D weaponPivot;
 
 	public override void _Ready()
 	{	
@@ -20,13 +31,15 @@ public partial class PlayerCharacter : CharacterBody2D
 		// Subscribe to health depleted event
 		healthComponent.HealthDepleted += OnHealthDepleted;
 		
-		// Load melee weapon base scene
-		PackedScene meleeWeaponScene = ResourceLoader.Load<PackedScene>("res://game/scenes/weapons/melee_weapon.tscn");
+		// Load base weapon scenes
+		meleeWeaponScene = ResourceLoader.Load<PackedScene>("res://game/scenes/weapons/melee_weapon.tscn");
+		rangedWeaponScene = ResourceLoader.Load<PackedScene>("res://game/scenes/weapons/ranged_weapon.tscn");
 		
-		// Create basic melee weapon and add instantiate as a child of the weapon pivot
-		meleeWeapon = (Node2D)meleeWeaponScene.Instantiate();
-		weaponPivot = GetNode<Node2D>("WeaponPivot");
-		weaponPivot.AddChild(meleeWeapon);
+		weaponPivot = GetNode<Marker2D>("WeaponPivot");
+		
+		// Create melee weapon and add instantiate as a child of the weapon pivot
+		SwapWeapons(WeaponTypes.RANGED);
+		
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -34,25 +47,10 @@ public partial class PlayerCharacter : CharacterBody2D
 		MovePlayer(delta);
 		
 		// Get mouse position and direction from character to mouse position
-		Vector2 mousePos = GetViewport().GetMousePosition() + Position;
-		Vector2 spriteDir = mousePos - GlobalPosition;
-		spriteDir = spriteDir.Normalized();
+		Vector2 lookDirection = GetGlobalMousePosition() - GlobalPosition;
+		lookDirection = lookDirection.Normalized();
 		
-		// Flip character and weapon to side the mouse is on
-		if (spriteDir.X > 0.0f)
-		{
-			GetNode<Sprite2D>("Sprite").FlipH = true;
-			weaponPivot.Position = new Vector2(7, 0);
-			meleeWeapon.GetNode<CollisionShape2D>("AttackArea/CollisionShape2D").Position = new Vector2(20, -9);
-		}
-		else
-		{
-			GetNode<Sprite2D>("Sprite").FlipH = false;
-			weaponPivot.Position = new Vector2(-7, 0);
-			meleeWeapon.GetNode<CollisionShape2D>("AttackArea/CollisionShape2D").Position = new Vector2(-20, -9);
-		}
-		
-		GD.Print();
+		FlipSprite(lookDirection);
 	}
 	
 	// Get input updates the character's direction,
@@ -95,6 +93,71 @@ public partial class PlayerCharacter : CharacterBody2D
 		Velocity = velocity;
 		
 		MoveAndSlide();
+	}
+	
+	private void SwapWeapons(WeaponTypes weaponType)
+	{
+		activeWeapon = weaponType;
+		
+		switch (weaponType)
+		{
+			case WeaponTypes.MELEE:
+				weapon = (Node2D)meleeWeaponScene.Instantiate();
+				break;
+			case WeaponTypes.RANGED:
+				weapon = (Node2D)rangedWeaponScene.Instantiate();
+				break;
+		}
+		
+		weaponPivot.AddChild(weapon);
+	}
+	
+	private void FlipSprite(Vector2 lookDirection)
+	{
+		// Flip character, weapon, and child nodes to side the mouse cursor is on
+		if (lookDirection.X > 0.0f)
+		{
+			//
+			// Facing to the right
+			//
+			GetNode<Sprite2D>("Sprite").FlipH = false;
+			weapon.GetNode<Sprite2D>("Sprite").FlipH = true;
+			weaponPivot.Position = new Vector2(7, 0);
+			
+			// Swap sides of melee collision box
+			if (activeWeapon == WeaponTypes.MELEE)
+			{
+				weapon.GetNode<CollisionShape2D>("AttackArea/CollisionShape2D").Position = new Vector2(20, -9);	
+			}
+			
+			// Swap sides for bullets to shoot from
+			if (activeWeapon == WeaponTypes.RANGED)
+			{
+				weapon.GetNode<Marker2D>("Tip").Position = new Vector2(-7, 1);
+			}
+		}
+		else
+		{
+			//
+			// Facing to the left
+			//
+			
+			GetNode<Sprite2D>("Sprite").FlipH = true;
+			weapon.GetNode<Sprite2D>("Sprite").FlipH = false;
+			weaponPivot.Position = new Vector2(-7, 0);
+			
+			// Swap sides of melee collision box
+			if (activeWeapon == WeaponTypes.MELEE)
+			{
+				weapon.GetNode<CollisionShape2D>("AttackArea/CollisionShape2D").Position = new Vector2(-20, -9);	
+			}
+			
+			// Swap sides for bullets to shoot from
+			if (activeWeapon == WeaponTypes.RANGED)
+			{
+				weapon.GetNode<Marker2D>("Tip").Position = new Vector2(7, 1);
+			}
+		}
 	}
 	
 	private void OnHealthDepleted()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d03smvng0pogp"]
 
 [ext_resource type="Script" path="res://game/scripts/PlayerCharacter.cs" id="1_hvkpo"]
-[ext_resource type="Texture2D" uid="uid://dlqnwlbhgu66t" path="res://game/sprites/TheGameJammers_Logo_whiteBG.png" id="1_mjgbr"]
+[ext_resource type="Texture2D" uid="uid://dwjyaeaeicjmq" path="res://game/sprites/player_character.png" id="2_n6p2l"]
 [ext_resource type="PackedScene" uid="uid://dwj6k8322b6rv" path="res://game/scenes/components/health_component.tscn" id="3_xfj0y"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_51tqa"]
@@ -15,10 +15,11 @@ shape = SubResource("CapsuleShape2D_51tqa")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -2.38419e-07)
-scale = Vector2(0.0136719, 0.0234375)
-texture = ExtResource("1_mjgbr")
+scale = Vector2(0.01, 0.01)
+texture = ExtResource("2_n6p2l")
+flip_h = true
 
-[node name="WeaponPivot" type="Node2D" parent="."]
+[node name="WeaponPivot" type="Marker2D" parent="."]
 position = Vector2(-7, 0)
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_xfj0y")]

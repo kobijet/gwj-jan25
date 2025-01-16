@@ -79,6 +79,7 @@ public partial class EnemyCharacter : CharacterBody2D
 	{
 		Vector2 velocity = Velocity;
 		
+		// Get direction towards target
 		direction = targetPos - GlobalPosition;
 		direction = direction.Normalized();
 		
@@ -98,9 +99,9 @@ public partial class EnemyCharacter : CharacterBody2D
 			}
 		}
 		
-		Velocity = velocity;
+		Velocity = velocity * (float)delta;
 		
-		MoveAndSlide();
+		MoveAndCollide(Velocity);
 	}
 	
 	private void OnHealthDepleted()
