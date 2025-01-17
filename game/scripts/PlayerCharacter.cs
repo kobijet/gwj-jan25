@@ -26,6 +26,8 @@ public partial class PlayerCharacter : CharacterBody2D
 	private Marker2D weaponPivot;
 	
 	private AnimatedSprite2D playerSprite;
+	
+	[Signal] public delegate void PlayerDiedEventHandler();
 
 	public override void _Ready()
 	{	
@@ -213,8 +215,8 @@ public partial class PlayerCharacter : CharacterBody2D
 	
 	private void OnHealthDepleted()
 	{
-		// Do stuff on character death
-		GD.Print("Player died! Trigger game over.");
+		EmitSignal(SignalName.PlayerDied);
+		playerSprite.Visible = false;
 	}
 	
 	public override void _ExitTree()

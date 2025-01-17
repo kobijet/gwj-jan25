@@ -15,6 +15,7 @@ public partial class GameManager : Node
 	private List<Node2D> enemySpawners;
 	
 	private Hud gameHud;
+	private PackedScene gameOverScene;
 	
 	private Random rand;
 	
@@ -37,10 +38,16 @@ public partial class GameManager : Node
 		var hudNode = GetNode<Node>("%PlayerCharacter/Camera2D/HUD");
 		gameHud = hudNode as Hud;
 		gameHud.GetNode<Button>("GamePanel/NextRoundButton").Pressed += StartRound;
+		
+		gameOverScene = ResourceLoader.Load<PackedScene>("res://game/scenes/UI/game_over.tscn");
 	
 		// Keep a list of enemy spawners for control
 		enemySpawners = new List<Node2D>();
 		SetupEnemySpawners(4);
+		
+		// Subscribe to player death event
+		PlayerCharacter player = GetNode("%PlayerCharacter") as PlayerCharacter;
+		player.PlayerDied += EndGame;
 		
 		StartRound();
 	}
@@ -93,6 +100,8 @@ public partial class GameManager : Node
 	
 	private void EndGame()
 	{
+		var gameOverScreen = gameOverScene.Instantiate();
+		gameHud.AddChild(gameOverScreen);
 	}
 	
 	private void PauseEnemySpawners()
