@@ -1,0 +1,86 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgmceob4qsdf"]
+
+[ext_resource type="Script" path="res://game/scripts/game_over/game_over.gd" id="1_ee6hr"]
+[ext_resource type="Theme" uid="uid://dtej56pljgyf2" path="res://assets/ui_theme/temp_theme.tres" id="1_wemei"]
+[ext_resource type="Texture2D" uid="uid://u4654ycf8uce" path="res://assets/textures/Texturelabs_Soil_120S.jpg" id="2_sqk4t"]
+
+[node name="GameOver_tscn" type="Node2D"]
+script = ExtResource("1_ee6hr")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_wemei")
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0
+offset_top = 2.0
+offset_right = 1151.0
+offset_bottom = 654.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_sqk4t")
+
+[node name="Panel" type="Panel" parent="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 413.0
+offset_top = 177.0
+offset_right = 713.0
+offset_bottom = 477.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="RESTART_Button" type="Button" parent="Control/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+text = "RESTART"
+
+[node name="TITLE_Button" type="Button" parent="Control/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+text = "EXIT TO TITLE"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 426.0
+offset_top = 56.0
+offset_right = 802.0
+offset_bottom = 126.0
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 20
+text = "Game Over"
+
+[connection signal="pressed" from="Control/Panel/MarginContainer/VBoxContainer/RESTART_Button" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Control/Panel/MarginContainer/VBoxContainer/TITLE_Button" to="." method="_on_title_button_pressed"]

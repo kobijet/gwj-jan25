@@ -62,5 +62,21 @@ custom_minimum_size = Vector2(250, 50)
 layout_mode = 2
 text = "EXIT GAME"
 
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 433.0
+offset_right = 284.0
+offset_bottom = 643.0
+text = "Controls:
+  Movement: WASD
+  Change weapon to
+    melee: 1
+    ranged: 2
+    bomb: 3
+  Attack: Left Click
+  Aim: Cursor
+    pause: ESC"
+
 [connection signal="pressed" from="Control/Panel/MarginContainer/VBoxContainer/START_Button" to="." method="_start_button_pressed"]
 [connection signal="pressed" from="Control/Panel/MarginContainer/VBoxContainer/EXIT_Button" to="." method="_exit_button_pressed"]
