@@ -24,6 +24,8 @@ public partial class PlayerCharacter : CharacterBody2D
 	
 	private Node2D weapon;
 	private Marker2D weaponPivot;
+	
+	private AnimatedSprite2D playerSprite;
 
 	public override void _Ready()
 	{	
@@ -38,6 +40,8 @@ public partial class PlayerCharacter : CharacterBody2D
 		bombScene = ResourceLoader.Load<PackedScene>("res://game/scenes/weapons/bomb.tscn");
 		
 		weaponPivot = GetNode<Marker2D>("WeaponPivot");
+		
+		playerSprite = GetNode<AnimatedSprite2D>("Sprite");
 		
 		// Create melee weapon and add instantiate as a child of the weapon pivot
 		SwapWeapons(WeaponTypes.BOMB);
@@ -109,6 +113,8 @@ public partial class PlayerCharacter : CharacterBody2D
 		// GetInput() can be replaced by any bool condition
 		if (GetInput())
 		{
+			playerSprite.Play(); // Play running animation
+			
 			// Apply movement in direction
 			velocity = direction * maxSpeed;
 			
@@ -116,6 +122,8 @@ public partial class PlayerCharacter : CharacterBody2D
 		}
 		else
 		{
+			playerSprite.Stop(); // Stop running animation
+			
 			// Apply deceleration to character
 			if (velocity != Vector2.Zero)
 			{
@@ -163,7 +171,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			//
 			// Facing to the right
 			//
-			GetNode<Sprite2D>("Sprite").FlipH = false;
+			playerSprite.FlipH = false;
 			weapon.GetNode<Sprite2D>("Sprite").FlipH = true;
 			weaponPivot.Position = new Vector2(7, 0);
 			
@@ -185,7 +193,7 @@ public partial class PlayerCharacter : CharacterBody2D
 			// Facing to the left
 			//
 			
-			GetNode<Sprite2D>("Sprite").FlipH = true;
+			playerSprite.FlipH = true;
 			weapon.GetNode<Sprite2D>("Sprite").FlipH = false;
 			weaponPivot.Position = new Vector2(-7, 0);
 			
@@ -206,6 +214,7 @@ public partial class PlayerCharacter : CharacterBody2D
 	private void OnHealthDepleted()
 	{
 		// Do stuff on character death
+		GD.Print("Player died! Trigger game over.");
 	}
 	
 	public override void _ExitTree()

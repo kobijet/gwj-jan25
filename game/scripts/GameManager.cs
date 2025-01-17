@@ -91,6 +91,10 @@ public partial class GameManager : Node
 		gameHud.EndRound();
 	}
 	
+	private void EndGame()
+	{
+	}
+	
 	private void PauseEnemySpawners()
 	{
 		for (int i = 0; i < enemySpawners.Count; i++)
