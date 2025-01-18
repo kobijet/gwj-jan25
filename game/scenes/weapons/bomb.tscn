@@ -1,7 +1,50 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnw35olm83qlg"]
+[gd_scene load_steps=9 format=3 uid="uid://bnw35olm83qlg"]
 
 [ext_resource type="Texture2D" uid="uid://dt63m2ae3le0x" path="res://game/sprites/bullet.png" id="1_do4lc"]
 [ext_resource type="Script" path="res://game/scripts/weapons/Bomb.cs" id="1_jr41p"]
+[ext_resource type="Shader" path="res://game/scenes/weapons/bomb.gdshader" id="2_lv73v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_suarj"]
+shader = ExtResource("2_lv73v")
+shader_parameter/flash_color = null
+shader_parameter/flash_value = null
+
+[sub_resource type="Animation" id="Animation_tlr75"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_pedpb"]
+resource_name = "bomb_flash"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [null, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7b6fb"]
+_data = {
+"RESET": SubResource("Animation_tlr75"),
+"bomb_flash": SubResource("Animation_pedpb")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5syvj"]
 
@@ -10,10 +53,14 @@ script = ExtResource("1_jr41p")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_suarj")
 scale = Vector2(2, 2)
 texture = ExtResource("1_do4lc")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+libraries = {
+"": SubResource("AnimationLibrary_7b6fb")
+}
 
 [node name="BlastRadius" type="Area2D" parent="."]
 collision_layer = 2

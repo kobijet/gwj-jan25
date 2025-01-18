@@ -43,7 +43,7 @@ public partial class GameManager : Node
 	
 		// Keep a list of enemy spawners for control
 		enemySpawners = new List<Node2D>();
-		SetupEnemySpawners(4);
+		SetupEnemySpawners(1);
 		
 		// Subscribe to player death event
 		PlayerCharacter player = GetNode("%PlayerCharacter") as PlayerCharacter;
@@ -82,6 +82,11 @@ public partial class GameManager : Node
 	
 	private void StartRound()
 	{
+		if (roundsComplete != 0)
+		{
+			roundLength = roundLength * (roundsComplete / 10);
+		}
+		
 		gameTimer.SetWaitTime(roundLength);
 		gameTimer.SetPaused(false);
 		StartEnemySpawners();
@@ -90,7 +95,7 @@ public partial class GameManager : Node
 
 	private void EndRound()
 	{
-		GD.Print("Rounds complete: ");
+		GD.Print("Rounds complete: " + roundsComplete);
 		roundsComplete++;
 		
 		gameTimer.SetPaused(true);

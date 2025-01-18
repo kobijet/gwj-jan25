@@ -19,10 +19,11 @@ layer = -1
 follow_viewport_enabled = true
 
 [node name="TextureRect" type="TextureRect" parent="Background"]
+texture_filter = 1
 texture_repeat = 2
-offset_right = 2310.0
-offset_bottom = 1304.0
-scale = Vector2(0.5, 0.5)
+offset_right = 3844.0
+offset_bottom = 2170.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_xfc8y")
 stretch_mode = 1
 
@@ -35,7 +36,7 @@ scale = Vector2(1.00424, 1)
 maxSpeed = 175.0
 
 [node name="Camera2D" type="Camera2D" parent="PlayerCharacter"]
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 
 [node name="HUD" type="CanvasLayer" parent="PlayerCharacter/Camera2D"]
 script = ExtResource("4_ycehk")

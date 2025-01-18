@@ -9,7 +9,8 @@ public partial class EnemySpawner : Node2D
 	
 	public bool active = false;
 	
-	private PackedScene enemyScene;
+	private PackedScene basicEnemyScene;
+	private PackedScene slugEnemyScene;
 	
 	private List<EnemyCharacter> livingEntities = new List<EnemyCharacter>();
 	
@@ -17,10 +18,15 @@ public partial class EnemySpawner : Node2D
 	
 	[Export] public double spawnCooldown = 4.0;
 	
+	private Random rand;
+	
 	public override void _Ready() 
 	{
+		rand = new Random();
+		
 		// Load external resources
-		enemyScene = ResourceLoader.Load<PackedScene>("res://game/scenes/enemy_character.tscn");
+		basicEnemyScene = ResourceLoader.Load<PackedScene>("res://game/scenes/enemy_character.tscn");
+		slugEnemyScene = ResourceLoader.Load<PackedScene>("res://game/scenes/enemy_character_slug.tscn");
 		
 		// Setup initial spawn timer
 		spawnTimer = new Timer();
@@ -43,8 +49,19 @@ public partial class EnemySpawner : Node2D
 	}
 	
 	private void SpawnEnemy()
-	{	
-		Node2D enemy = (Node2D)enemyScene.Instantiate();
+	{
+		bool spawnSlug = rand.Next(0, 100) <= 50 ? true : false;
+		
+		Node2D enemy = null;
+		
+		if (spawnSlug)
+		{
+			enemy = (Node2D)basicEnemyScene.Instantiate();	
+		}
+		else
+		{
+			enemy = (Node2D)slugEnemyScene.Instantiate();
+		}
 		
 		// Begin tracking enemy and subscribe to its death event
 		livingEntities.Add(enemy as EnemyCharacter);
@@ -53,5 +70,7 @@ public partial class EnemySpawner : Node2D
 		healthComponent.HealthDepleted += () => livingEntities.Remove(enemy as EnemyCharacter);
 		
 		AddChild(enemy);
+		
+		// StopSpawner(); // MAKE SURE TO REMOVE - Ensures spawning of only one enemy
 	}
 }
