@@ -14,6 +14,7 @@ public partial class EnemyCharacter : CharacterBody2D
 	// Pathfinding
 	private Vector2 targetPos = new Vector2(300.0f, 100.0f);
 	private float distanceToTarget;
+	[Export] public float targetDistance = 50.0f;
 	
 	private Node2D playerCharacter;
 	
@@ -38,6 +39,8 @@ public partial class EnemyCharacter : CharacterBody2D
 		attackTimer = new Timer();
 		attackTimer.OneShot = true;
 		AddChild(attackTimer);
+		attackTimer.Start(attackCooldown);
+		attackTimer.SetPaused(true);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -51,17 +54,22 @@ public partial class EnemyCharacter : CharacterBody2D
 		MoveEnemy(delta);
 		
 		// Start damage timer and deal damage to entities if they are within attack radius
+		// Pause the timer and reset it otherwise
 		Godot.Collections.Array<Node2D> overlappingBodies = attackArea.GetOverlappingBodies();
-		if (overlappingBodies.Count != 0)
+		if (overlappingBodies.Count != 0 && !isMoving)
 		{
-			attackTimer.Paused = false;
+			attackTimer.SetPaused(false);
+			
 			if (attackTimer.IsStopped())
 			{
 				AttackEntity(overlappingBodies);
 				attackTimer.Start(attackCooldown);
 			}
-		} else {
-			attackTimer.Paused = true;
+		}
+		else
+		{
+			attackTimer.Start(attackCooldown); // Doesn't seem to be working, find something else?
+			attackTimer.SetPaused(true);
 		}
 	}
 	
@@ -92,7 +100,7 @@ public partial class EnemyCharacter : CharacterBody2D
 		direction = targetPos - GlobalPosition;
 		direction = direction.Normalized();
 		
-		if (distanceToTarget >= 50.0f ? true : false)
+		if (distanceToTarget >= targetDistance ? true : false)
 		{	
 			// Apply movement in direction
 			velocity = direction * maxSpeed;

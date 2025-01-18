@@ -13,7 +13,7 @@ public partial class HealthComponent : Control
 	// Events
 	[Signal] public delegate void HealthDepletedEventHandler();
 	
-	public override void _Ready()
+	public override void _EnterTree()
 	{	
 		health = maxHealth;
 		

@@ -27,11 +27,9 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_xfc8y")
 stretch_mode = 1
 
-[node name="GameManager" parent="." instance=ExtResource("2_f1l1p")]
-unique_name_in_owner = true
-
 [node name="PlayerCharacter" parent="." instance=ExtResource("1_5npwl")]
 unique_name_in_owner = true
+z_index = 1
 scale = Vector2(1.00424, 1)
 maxSpeed = 175.0
 
@@ -96,3 +94,6 @@ text = "Next round"
 label_settings = SubResource("LabelSettings_o7khs")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="GameManager" parent="." instance=ExtResource("2_f1l1p")]
+unique_name_in_owner = true

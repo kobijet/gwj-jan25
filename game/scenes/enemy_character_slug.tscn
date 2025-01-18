@@ -12,10 +12,11 @@ height = 170.0
 radius = 116.004
 
 [node name="EnemyCharacter" type="CharacterBody2D"]
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("1_g0u56")
 speed = 2.0
 maxSpeed = 10.0
+targetDistance = 100.0
 damage = 10.0
 
 [node name="Sprite" type="Sprite2D" parent="."]

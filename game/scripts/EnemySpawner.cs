@@ -50,10 +50,10 @@ public partial class EnemySpawner : Node2D
 	
 	private void SpawnEnemy()
 	{
-		bool spawnSlug = rand.Next(0, 100) <= 50 ? true : false;
+		float slugSpawnChance = 90;
+		bool spawnSlug = rand.Next(0, 100) <= slugSpawnChance ? true : false;
 		
 		Node2D enemy = null;
-		
 		if (spawnSlug)
 		{
 			enemy = (Node2D)basicEnemyScene.Instantiate();	
@@ -66,11 +66,12 @@ public partial class EnemySpawner : Node2D
 		// Begin tracking enemy and subscribe to its death event
 		livingEntities.Add(enemy as EnemyCharacter);
 		
+		// Setup enemy health component
 		HealthComponent healthComponent = enemy.GetNode<HealthComponent>("HealthComponent");
 		healthComponent.HealthDepleted += () => livingEntities.Remove(enemy as EnemyCharacter);
 		
 		AddChild(enemy);
 		
-		// StopSpawner(); // MAKE SURE TO REMOVE - Ensures spawning of only one enemy
+		// StopSpawner(); // REMOVE BEFORE PRODUCTION - Ensures spawning of only one enemy
 	}
 }

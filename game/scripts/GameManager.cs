@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public partial class GameManager : Node
 {
 	public int roundsComplete;
-	
 	[Export] public double roundLength = 10.0;
 	
 	private Timer gameTimer;
 	private double timeLeft;
 	
+	[Export] public int spawnersToCreate = 4;
 	private PackedScene enemySpawner;
 	private List<Node2D> enemySpawners;
 	
@@ -27,9 +27,9 @@ public partial class GameManager : Node
 		// Start a round timer
 		// End round when timer runs out
 		gameTimer = new Timer();
-		gameTimer.SetWaitTime(roundLength);
 		gameTimer.Timeout += EndRound;
 		AddChild(gameTimer);
+		gameTimer.SetWaitTime(roundLength);
 		gameTimer.Start();
 		
 		enemySpawner = ResourceLoader.Load<PackedScene>("res://game/scenes/enemy_spawner.tscn");
@@ -41,9 +41,8 @@ public partial class GameManager : Node
 		
 		gameOverScene = ResourceLoader.Load<PackedScene>("res://game/scenes/UI/game_over.tscn");
 	
-		// Keep a list of enemy spawners for control
+		// Keep a list of enemy spawners for controling
 		enemySpawners = new List<Node2D>();
-		SetupEnemySpawners(1);
 		
 		// Subscribe to player death event
 		PlayerCharacter player = GetNode("%PlayerCharacter") as PlayerCharacter;
@@ -82,24 +81,37 @@ public partial class GameManager : Node
 	
 	private void StartRound()
 	{
+		if (enemySpawners.Count != 0)
+		{
+			DestroyEnemySpawners();	
+		}
+		SetupEnemySpawners(spawnersToCreate);
+		
+		float difficulty = 1.0f + (float)Math.Sqrt(roundsComplete / 10);
+		GD.Print($"{difficulty} difficulty factor at round {roundsComplete}");
+		
 		if (roundsComplete != 0)
 		{
-			roundLength = roundLength * (roundsComplete / 10);
+			roundLength = 10.0f * difficulty;
 		}
 		
-		gameTimer.SetWaitTime(roundLength);
+		// Set timer length to new round length and unpause timer
+		gameTimer.Start(roundLength);
 		gameTimer.SetPaused(false);
+		
 		StartEnemySpawners();
+		
 		gameHud.StartRound();
 	}	
 
 	private void EndRound()
 	{
-		GD.Print("Rounds complete: " + roundsComplete);
 		roundsComplete++;
 		
 		gameTimer.SetPaused(true);
+		
 		PauseEnemySpawners();
+		
 		gameHud.EndRound();
 	}
 	
@@ -107,6 +119,16 @@ public partial class GameManager : Node
 	{
 		var gameOverScreen = gameOverScene.Instantiate();
 		gameHud.AddChild(gameOverScreen);
+	}
+	
+	private void DestroyEnemySpawners()
+	{
+		for (int i = 0; i < enemySpawners.Count; i++)
+		{
+			enemySpawners[i].QueueFree();
+		}
+		
+		enemySpawners.Clear();
 	}
 	
 	private void PauseEnemySpawners()
