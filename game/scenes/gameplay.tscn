@@ -34,7 +34,7 @@ scale = Vector2(1.00424, 1)
 maxSpeed = 175.0
 
 [node name="Camera2D" type="Camera2D" parent="PlayerCharacter"]
-zoom = Vector2(2, 2)
+zoom = Vector2(2.5, 2.5)
 
 [node name="HUD" type="CanvasLayer" parent="PlayerCharacter/Camera2D"]
 script = ExtResource("4_ycehk")

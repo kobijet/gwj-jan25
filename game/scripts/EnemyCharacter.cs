@@ -23,11 +23,15 @@ public partial class EnemyCharacter : CharacterBody2D
 	private Timer attackTimer;
 	[Export] public double attackCooldown = 1.0;
 	[Export] public float damage = 5.0f;
+	
+	private Sprite2D enemySprite;
 
 	public override void _Ready()
 	{
 		// Set target chase position to player position
 		playerCharacter = GetTree().Root.GetNode<Node2D>("Game/%PlayerCharacter");
+		
+		enemySprite = GetNode<Sprite2D>("Sprite");
 		
 		// Subscribe to health depleted event
 		healthComponent = GetNode<HealthComponent>("HealthComponent");
@@ -41,6 +45,19 @@ public partial class EnemyCharacter : CharacterBody2D
 		AddChild(attackTimer);
 		attackTimer.Start(attackCooldown);
 		attackTimer.SetPaused(true);
+	}
+
+	public override void _Process(double delta)
+	{
+		// Flip sprite in direction of target
+		if (direction.X >= 0)
+		{
+			enemySprite.FlipH = true;
+		}
+		else
+		{
+			enemySprite.FlipH = false;
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)

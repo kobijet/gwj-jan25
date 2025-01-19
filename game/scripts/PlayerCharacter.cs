@@ -46,7 +46,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		playerSprite = GetNode<AnimatedSprite2D>("Sprite");
 		
 		// Create melee weapon and add instantiate as a child of the weapon pivot
-		SwapWeapons(WeaponTypes.BOMB);
+		SwapWeapons(WeaponTypes.MELEE);
 		
 	}
 
@@ -125,6 +125,7 @@ public partial class PlayerCharacter : CharacterBody2D
 		else
 		{
 			playerSprite.Stop(); // Stop running animation
+			playerSprite.Frame = 2;
 			
 			// Apply deceleration to character
 			if (velocity != Vector2.Zero)
@@ -153,12 +154,15 @@ public partial class PlayerCharacter : CharacterBody2D
 		{
 			case WeaponTypes.MELEE:
 				weapon = (Node2D)meleeWeaponScene.Instantiate();
+				playerSprite.Animation = "run_sword";
 				break;
 			case WeaponTypes.RANGED:
 				weapon = (Node2D)rangedWeaponScene.Instantiate();
+				playerSprite.Animation = "run_bow";
 				break;
 			case WeaponTypes.BOMB:
 				weapon = (Node2D)bombScene.Instantiate();
+				playerSprite.Animation = "run_bomb";
 				break;
 		}
 		

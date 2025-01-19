@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://ca47cgbld01dg"]
+
+[ext_resource type="Script" path="res://game/scripts/EnemyCharacter.cs" id="1_68pk5"]
+[ext_resource type="Texture2D" uid="uid://2qdy6j6v8bf8" path="res://game/sprites/enemy_wasp.png" id="2_1s45n"]
+[ext_resource type="PackedScene" uid="uid://dwj6k8322b6rv" path="res://game/scenes/components/health_component.tscn" id="3_2idea"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tq4wk"]
+radius = 16.0
+height = 52.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1bxev"]
+radius = 40.0
+
+[node name="EnemyCharacter" type="CharacterBody2D"]
+collision_mask = 3
+script = ExtResource("1_68pk5")
+speed = 10.0
+maxSpeed = 30.0
+attackCooldown = 2.0
+damage = 10.0
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -2.38419e-07)
+scale = Vector2(0.026, 0.026)
+texture = ExtResource("2_1s45n")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_tq4wk")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_2idea")]
+offset_top = -30.0
+offset_bottom = -30.0
+scale = Vector2(0.25, 0.15)
+maxHealth = 150.0
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_1bxev")

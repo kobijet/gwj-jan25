@@ -54,7 +54,6 @@ script = ExtResource("1_jr41p")
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
 material = SubResource("ShaderMaterial_suarj")
-scale = Vector2(2, 2)
 texture = ExtResource("1_do4lc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]

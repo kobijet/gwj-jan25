@@ -5,7 +5,7 @@ public partial class Bomb : Node2D
 {
 	[Export] public float damage = 75.0f;
 	
-	public float cooldownTime = 5.0f;
+	public float cooldownTime = 3.0f;
 	
 	private Timer timer;
 	

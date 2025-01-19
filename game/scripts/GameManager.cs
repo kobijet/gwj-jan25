@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 public partial class GameManager : Node
 {
-	public int roundsComplete;
+	public int roundsCompleted;
 	[Export] public double roundLength = 10.0;
 	
 	private Timer gameTimer;
 	private double timeLeft;
 	
-	[Export] public int spawnersToCreate = 4;
+	[Export] public int spawnersToCreate = 1;
+	[Export] public int maxSpawners = 8;
 	private PackedScene enemySpawner;
 	private List<Node2D> enemySpawners;
 	
@@ -18,6 +19,8 @@ public partial class GameManager : Node
 	private PackedScene gameOverScene;
 	
 	private Random rand;
+	
+	public float difficulty = 1.0f;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -56,6 +59,45 @@ public partial class GameManager : Node
 		timeLeft = gameTimer.TimeLeft;
 	}
 	
+	private void StartRound()
+	{
+		if (enemySpawners.Count != 0)
+		{
+			DestroyEnemySpawners();	
+		}
+		
+		// Increase "difficulty" as time goes on
+		// Used for scaling different elements of the game
+		difficulty = 1.0f + (float)Math.Sqrt(roundsCompleted / 2);
+		GD.Print($"{difficulty} difficulty factor at round {roundsCompleted}");
+		
+		// Increase number of spawners by difficulty factor up to max
+		if (roundsCompleted != 0)
+		{
+			spawnersToCreate = (int)Math.Round(1 + (difficulty / 2));
+			if (spawnersToCreate > maxSpawners)
+			{
+				spawnersToCreate = maxSpawners;
+			}
+		}
+		
+		SetupEnemySpawners(spawnersToCreate);
+		
+		// Scale up round length with difficulty
+		if (roundsCompleted != 0)
+		{
+			roundLength = 10.0f * difficulty;
+		}
+		
+		// Set timer length to new round length and unpause timer
+		gameTimer.Start(roundLength);
+		gameTimer.SetPaused(false);
+		
+		StartEnemySpawners();
+		
+		gameHud.StartRound();
+	}	
+	
 	public void SetupEnemySpawners(int numSpawners)
 	{		
 		// Get viewport size for plopping down random spawners within the bounds
@@ -78,41 +120,30 @@ public partial class GameManager : Node
 			AddChild(spawner);
 		}
 	}
-	
-	private void StartRound()
-	{
-		if (enemySpawners.Count != 0)
-		{
-			DestroyEnemySpawners();	
-		}
-		SetupEnemySpawners(spawnersToCreate);
-		
-		float difficulty = 1.0f + (float)Math.Sqrt(roundsComplete / 10);
-		GD.Print($"{difficulty} difficulty factor at round {roundsComplete}");
-		
-		if (roundsComplete != 0)
-		{
-			roundLength = 10.0f * difficulty;
-		}
-		
-		// Set timer length to new round length and unpause timer
-		gameTimer.Start(roundLength);
-		gameTimer.SetPaused(false);
-		
-		StartEnemySpawners();
-		
-		gameHud.StartRound();
-	}	
 
 	private void EndRound()
 	{
-		roundsComplete++;
+		roundsCompleted++;
 		
 		gameTimer.SetPaused(true);
-		
+
 		PauseEnemySpawners();
 		
 		gameHud.EndRound();
+	}
+	
+	private bool CheckSpawnersForEnemies()
+	{
+		bool enemiesAlive = false;
+		for (int i = 0; i < enemySpawners.Count; i++)
+		{
+			var spawnerScript = enemySpawners[i] as EnemySpawner;
+			if (enemiesAlive != spawnerScript.CheckForLivingEnemies())
+			{
+				enemiesAlive = spawnerScript.CheckForLivingEnemies();
+			}
+		}
+		return enemiesAlive;
 	}
 	
 	private void EndGame()

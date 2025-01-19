@@ -5,11 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://dwj6k8322b6rv" path="res://game/scenes/components/health_component.tscn" id="3_y5whr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tq4wk"]
-radius = 53.0
+radius = 22.0
 height = 170.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1bxev"]
-radius = 116.004
+radius = 105.043
 
 [node name="EnemyCharacter" type="CharacterBody2D"]
 collision_mask = 3
@@ -17,7 +17,8 @@ script = ExtResource("1_g0u56")
 speed = 2.0
 maxSpeed = 10.0
 targetDistance = 100.0
-damage = 10.0
+attackCooldown = 5.0
+damage = 25.0
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -26,6 +27,7 @@ scale = Vector2(0.05, 0.05)
 texture = ExtResource("2_6jr8b")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 26)
 rotation = -1.5708
 shape = SubResource("CapsuleShape2D_tq4wk")
 

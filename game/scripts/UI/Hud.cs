@@ -26,10 +26,16 @@ public partial class Hud : CanvasLayer
 	{
 		gameClockText.Visible = false;
 		nextRoundButton.Visible = true;
+		nextRoundButton.GetNode<Label>("NextRoundText").Text = "Next Wave";
+	}
+	
+	public void EnemiesAlive()
+	{
+		nextRoundButton.GetNode<Label>("NextRoundText").Text = "Stop the infestation!";
 	}
 	
 	public void StartRound()
-	{		
+	{
 		gameClockText.Visible = true;
 		nextRoundButton.Visible = false;
 	}

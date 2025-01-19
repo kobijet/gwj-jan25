@@ -13,14 +13,14 @@ public partial class HealthComponent : Control
 	// Events
 	[Signal] public delegate void HealthDepletedEventHandler();
 	
-	public override void _EnterTree()
+	public override void _Ready()
 	{	
 		health = maxHealth;
 		
 		// Setup health bar values
 		healthBar = GetNode<ProgressBar>("HealthBar");
-		healthBar.Value = maxHealth;
 		healthBar.MaxValue = maxHealth;
+		healthBar.Value = maxHealth;
 	}
 	
 	// Take damage and update healthbar
