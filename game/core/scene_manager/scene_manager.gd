@@ -25,7 +25,8 @@ const PAUSE_SCREEN = preload("res://game/scenes/UI/pause_screen.tscn")
 # Dictionary of scenes. Add more as needed.
 var known_scenes: Dictionary = {
 	"main_menu": preload("res://game/scenes/main_menu/main_menu.tscn"),
-	"gameplay": preload("res://game/scenes/gameplay.tscn")
+	"gameplay": preload("res://game/scenes/gameplay.tscn"),
+	"credits": preload("res://game/scenes/main_menu/menu_credits.tscn")
 }
 
 # Main Menu Check Boolean; Duct Tape Fix.
@@ -48,7 +49,12 @@ func to_main_menu() -> void:
 	on_main_menu = true
 	next_scene = known_scenes["main_menu"]
 	scene_change()
-
+	
+# Goes to credits menu.
+func to_credits() -> void:
+	on_main_menu = true
+	next_scene = known_scenes["credits"]
+	scene_change()
 
 # Goes to gameplay.
 func to_gameplay() -> void:

@@ -1,0 +1,28 @@
+Swoosh Main Menu Sounds:
+swoosh21.wav by kwahmah_02 -- https://freesound.org/s/269291/ -- License: Attribution 3.0
+
+Button Highlight (squirm sound):
+007 - Squish 05.wav by Trashcan_Studios -- https://freesound.org/s/660819/ -- License: Attribution 4.0
+
+Button Click (squish):
+Splat/Squish 4 by mrickey13 -- https://freesound.org/s/515621/ -- License: Creative Commons 0
+
+Music Title:
+"Ether Vox" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+Music Gameplay:
+"Professor Umlaut" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+Music Pause:
+"Ossuary 5 - Rest" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/
+
+Music Shop:
+"Alien Restaurant" Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0 License
+http://creativecommons.org/licenses/by/4.0/

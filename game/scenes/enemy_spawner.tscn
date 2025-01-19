@@ -1,10 +1,62 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc6a33nivx6nw"]
+[gd_scene load_steps=9 format=3 uid="uid://cc6a33nivx6nw"]
 
 [ext_resource type="Script" path="res://game/scripts/EnemySpawner.cs" id="1_c5um7"]
-[ext_resource type="Texture2D" uid="uid://imnrwqfdmuom" path="res://game/sprites/EnemySpawner.png" id="2_jymjr"]
+[ext_resource type="Texture2D" uid="uid://batlxecmpr6b1" path="res://game/sprites/bug_hole_opening.png" id="3_o8ks3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ie4h5"]
+atlas = ExtResource("3_o8ks3")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2k0x6"]
+atlas = ExtResource("3_o8ks3")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3bgf"]
+atlas = ExtResource("3_o8ks3")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cx7dw"]
+atlas = ExtResource("3_o8ks3")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_raw7a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ie4h5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2k0x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u3bgf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx7dw")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dclj5"]
+radius = 58.0086
 
 [node name="EnemySpawner" type="Node2D"]
 script = ExtResource("1_c5um7")
 
-[node name="DevSprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_jymjr")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_raw7a")
+animation = &"open"
+autoplay = "open"
+frame = 3
+frame_progress = 1.0
+
+[node name="Area2D" type="Area2D" parent="."]
+disable_mode = 1
+collision_layer = 5
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_dclj5")

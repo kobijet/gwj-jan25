@@ -18,6 +18,9 @@ func _ready() -> void:
 
 func _start_button_pressed() -> void:
 	SceneManager.to_gameplay()
+	
+func _credits_button_pressed() -> void:
+	SceneManager.to_credits()
 
 func _exit_button_pressed() -> void:
 	get_tree().quit()

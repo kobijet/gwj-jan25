@@ -134,9 +134,9 @@ public partial class PlayerCharacter : CharacterBody2D
 			}
 		}
 		
-		Velocity = velocity;
+		Velocity = velocity * (float)delta;
 		
-		MoveAndSlide();
+		MoveAndCollide(Velocity);
 	}
 	
 	// Instantiates a new weapon in the weapon slot and destroys the old one

@@ -15,7 +15,5 @@ func _process(delta):
 func _on_restart_button_pressed():
 	SceneManager.to_gameplay()
 
-
-
 func _on_title_button_pressed():
 	SceneManager.to_main_menu()
